@@ -60,4 +60,5 @@ CMakeFiles/vtsh.dir/src/repl.c.o: \
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
  /usr/include/linux/close_range.h \
- /home/deadbeat/VT-itmo/s5/ОСи/vtsh/include/repl.h
+ /home/deadbeat/VT-itmo/s5/ОСи/vtsh/include/repl.h \
+ /home/deadbeat/VT-itmo/s5/ОСи/vtsh/include/parser.h

@@ -19,6 +19,7 @@ add_compile_options(-Wall -Wextra -Wpedantic -g)
 add_executable(vtsh
     src/main.c
     src/repl.c
+    src/parser.c
 )
 
 # заголовочные файлы в include

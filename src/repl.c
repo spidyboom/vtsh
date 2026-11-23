@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "repl.h"
+#include "parser.h"
 
 void repl_run(void) {
     char *line = NULL;      // указатель на буфер куда будем читать строку с помощью getline
@@ -36,8 +37,26 @@ void repl_run(void) {
             continue;
         }
         
+        // структура команды + парс строки в неё
+        simple_command_t cmd;
+        if (parse_simple(line, &cmd) != 0) {
+            fprintf(stderr, "vtsh: parse error\n");
+            continue;
+        }
+
         // pass
-        printf("[echo] %s\n", line);
+        if (cmd.argc > 0) {
+            // печатаем аргументы
+            printf("[parsed] argc=%zu:", cmd.argc);
+            for (size_t i = 0; i < cmd.argc; ++i) {
+                printf(" [%s]", cmd.argv[i]);
+            }
+            printf("\n");
+        }
+        
+        // фришим память команды
+        command_free(&cmd);
+
     }
     
     // освобождаем динамическую память, нам её выделил getline

@@ -4,6 +4,7 @@ bin/vtsh: \
   /usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o \
   CMakeFiles/vtsh.dir/src/main.c.o \
   CMakeFiles/vtsh.dir/src/repl.c.o \
+  CMakeFiles/vtsh.dir/src/parser.c.o \
   /usr/lib/gcc/x86_64-linux-gnu/15/libgcc.a \
   /usr/lib/gcc/x86_64-linux-gnu/15/libgcc_s.so \
   /usr/lib/gcc/x86_64-linux-gnu/15/libgcc_s.so \
@@ -35,6 +36,8 @@ bin/vtsh: \
 CMakeFiles/vtsh.dir/src/main.c.o:
 
 CMakeFiles/vtsh.dir/src/repl.c.o:
+
+CMakeFiles/vtsh.dir/src/parser.c.o:
 
 /usr/lib/gcc/x86_64-linux-gnu/15/libgcc.a:
 
