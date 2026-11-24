@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/executor.c" "CMakeFiles/vtsh.dir/src/executor.c.o" "gcc" "CMakeFiles/vtsh.dir/src/executor.c.o.d"
   "/home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/main.c" "CMakeFiles/vtsh.dir/src/main.c.o" "gcc" "CMakeFiles/vtsh.dir/src/main.c.o.d"
   "/home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/parser.c" "CMakeFiles/vtsh.dir/src/parser.c.o" "gcc" "CMakeFiles/vtsh.dir/src/parser.c.o.d"
+  "/home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/process_manager.c" "CMakeFiles/vtsh.dir/src/process_manager.c.o" "gcc" "CMakeFiles/vtsh.dir/src/process_manager.c.o.d"
   "/home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/repl.c" "CMakeFiles/vtsh.dir/src/repl.c.o" "gcc" "CMakeFiles/vtsh.dir/src/repl.c.o.d"
   "" "bin/vtsh" "gcc" "CMakeFiles/vtsh.dir/link.d"
   )

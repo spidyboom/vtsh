@@ -1,6 +1,7 @@
 #ifndef VTSH_PARSER_H
 #define VTSH_PARSER_H
 #include <stddef.h>  
+#include <stdbool.h>
 
 // типы операторов
 typedef enum {
@@ -13,6 +14,7 @@ typedef enum {
 typedef struct {
     char **argv;   // массив строк
     size_t argc;   // кол-во аргументов (нулл не учитываем)
+    bool is_bg;    // true если это фоновая команда
 } simple_command_t;
 
 // узел плана выполнения

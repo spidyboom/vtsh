@@ -6,6 +6,7 @@
 #include "repl.h"
 #include "parser.h"
 #include "executor.h"
+#include "process_manager.h"
 
 void repl_run(void) {
     char *line = NULL;      // указатель на буфер куда будем читать строку с помощью getline
@@ -15,6 +16,9 @@ void repl_run(void) {
 
     // while true
     for (;;) {
+        // жнец зомбаков
+        reap_zombies();
+
         // принтуем vtsh> только если stdin - это терминал
         if (is_tty) {
             printf("vtsh> ");

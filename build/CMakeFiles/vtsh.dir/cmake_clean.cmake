@@ -6,6 +6,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/vtsh.dir/src/main.c.o.d"
   "CMakeFiles/vtsh.dir/src/parser.c.o"
   "CMakeFiles/vtsh.dir/src/parser.c.o.d"
+  "CMakeFiles/vtsh.dir/src/process_manager.c.o"
+  "CMakeFiles/vtsh.dir/src/process_manager.c.o.d"
   "CMakeFiles/vtsh.dir/src/repl.c.o"
   "CMakeFiles/vtsh.dir/src/repl.c.o.d"
   "bin/vtsh"

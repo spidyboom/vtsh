@@ -109,4 +109,5 @@ CMakeFiles/vtsh.dir/src/executor.c.o: \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
  /home/deadbeat/VT-itmo/s5/ОСи/vtsh/include/executor.h \
- /home/deadbeat/VT-itmo/s5/ОСи/vtsh/include/parser.h
+ /home/deadbeat/VT-itmo/s5/ОСи/vtsh/include/parser.h \
+ /usr/lib/gcc/x86_64-linux-gnu/15/include/stdbool.h

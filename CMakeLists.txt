@@ -21,6 +21,7 @@ add_executable(vtsh
     src/repl.c
     src/parser.c
     src/executor.c  
+    src/process_manager.c 
 )
 
 # заголовочные файлы в include

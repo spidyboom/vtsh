@@ -40,11 +40,23 @@ void plan_free(plan_t *p) {
 static int parse_single_command(const char *start, size_t len, simple_command_t *out) {
     out->argv = NULL;
     out->argc = 0;
+    out->is_bg = false;
 
     // копируем ровно len символов так как не имеем желания изменять исходную структуру
     char *copy = strndup(start, len);
     if (!copy) return -1;
 
+    // проверяем, не заканчивается ли на '&' (фоновый процесс)
+    // ищем последний непробельный символ
+    char *p = copy + len - 1;
+    while (p >= copy && isspace((unsigned char)*p)) p--;
+    
+    if (p >= copy && *p == '&') {
+        // вырезаем &
+        *p = '\0';
+        out->is_bg = true;
+    }
+    
     // выбираем начальное капасити в 8 и заполняем нулами все элементы
     size_t cap = 8;
     out->argv = calloc(cap, sizeof(char*));

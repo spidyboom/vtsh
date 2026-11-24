@@ -126,6 +126,7 @@ CMakeFiles/vtsh.dir/src/executor.c.o: /home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/
   /usr/include/x86_64-linux-gnu/sys/ucontext.h \
   /usr/include/x86_64-linux-gnu/sys/wait.h \
   /usr/lib/gcc/x86_64-linux-gnu/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stdbool.h \
   /usr/lib/gcc/x86_64-linux-gnu/15/include/stddef.h
 
 CMakeFiles/vtsh.dir/src/main.c.o: /home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/main.c \
@@ -183,6 +184,7 @@ CMakeFiles/vtsh.dir/src/parser.c.o: /home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/pa
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stdbool.h \
   /usr/lib/gcc/x86_64-linux-gnu/15/include/stddef.h
 
 CMakeFiles/vtsh.dir/src/repl.c.o: /home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/repl.c \
@@ -258,6 +260,7 @@ CMakeFiles/vtsh.dir/src/repl.c.o: /home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/repl
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
   /usr/lib/gcc/x86_64-linux-gnu/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stdbool.h \
   /usr/lib/gcc/x86_64-linux-gnu/15/include/stddef.h
 
 bin/vtsh: /lib64/ld-linux-x86-64.so.2 \
@@ -386,13 +389,11 @@ CMakeFiles/vtsh.dir/src/repl.c.o:
 
 /usr/include/asm-generic/errno.h:
 
-/usr/include/x86_64-linux-gnu/bits/select.h:
+/home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/main.c:
 
 /usr/include/features-time64.h:
 
-/home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/main.c:
-
-/usr/include/linux/types.h:
+/usr/include/x86_64-linux-gnu/bits/select.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o:
 
@@ -431,6 +432,10 @@ CMakeFiles/vtsh.dir/src/repl.c.o:
 /usr/include/features.h:
 
 /usr/include/linux/close_range.h:
+
+/usr/include/linux/types.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/15/include/stdbool.h:
 
 /usr/include/linux/errno.h:
 

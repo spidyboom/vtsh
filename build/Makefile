@@ -201,6 +201,30 @@ src/parser.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/src/parser.c.s
 .PHONY : src/parser.c.s
 
+src/process_manager.o: src/process_manager.c.o
+.PHONY : src/process_manager.o
+
+# target to build an object file
+src/process_manager.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/src/process_manager.c.o
+.PHONY : src/process_manager.c.o
+
+src/process_manager.i: src/process_manager.c.i
+.PHONY : src/process_manager.i
+
+# target to preprocess a source file
+src/process_manager.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/src/process_manager.c.i
+.PHONY : src/process_manager.c.i
+
+src/process_manager.s: src/process_manager.c.s
+.PHONY : src/process_manager.s
+
+# target to generate assembly for a file
+src/process_manager.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/src/process_manager.c.s
+.PHONY : src/process_manager.c.s
+
 src/repl.o: src/repl.c.o
 .PHONY : src/repl.o
 
@@ -243,6 +267,9 @@ help:
 	@echo "... src/parser.o"
 	@echo "... src/parser.i"
 	@echo "... src/parser.s"
+	@echo "... src/process_manager.o"
+	@echo "... src/process_manager.i"
+	@echo "... src/process_manager.s"
 	@echo "... src/repl.o"
 	@echo "... src/repl.i"
 	@echo "... src/repl.s"
