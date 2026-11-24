@@ -64,10 +64,12 @@ CMAKE_BINARY_DIR = /home/deadbeat/VT-itmo/s5/ОСи/vtsh/build
 
 # The main recursive "all" target.
 all: CMakeFiles/vtsh.dir/all
+all: CMakeFiles/deep.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: CMakeFiles/vtsh.dir/codegen
+codegen: CMakeFiles/deep.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -76,6 +78,7 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/vtsh.dir/clean
+clean: CMakeFiles/deep.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -85,7 +88,7 @@ clean: CMakeFiles/vtsh.dir/clean
 CMakeFiles/vtsh.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/deadbeat/VT-itmo/s5/ОСи/vtsh/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target vtsh"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/deadbeat/VT-itmo/s5/ОСи/vtsh/build/CMakeFiles --progress-num=3,4,5,6,7,8 "Built target vtsh"
 .PHONY : CMakeFiles/vtsh.dir/all
 
 # Build rule for subdir invocation for target.
@@ -102,13 +105,45 @@ vtsh: CMakeFiles/vtsh.dir/rule
 # codegen rule for target.
 CMakeFiles/vtsh.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/deadbeat/VT-itmo/s5/ОСи/vtsh/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Finished codegen for target vtsh"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/deadbeat/VT-itmo/s5/ОСи/vtsh/build/CMakeFiles --progress-num=3,4,5,6,7,8 "Finished codegen for target vtsh"
 .PHONY : CMakeFiles/vtsh.dir/codegen
 
 # clean rule for target.
 CMakeFiles/vtsh.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/clean
 .PHONY : CMakeFiles/vtsh.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/deep.dir
+
+# All Build rule for target.
+CMakeFiles/deep.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deep.dir/build.make CMakeFiles/deep.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deep.dir/build.make CMakeFiles/deep.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/deadbeat/VT-itmo/s5/ОСи/vtsh/build/CMakeFiles --progress-num=1,2 "Built target deep"
+.PHONY : CMakeFiles/deep.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/deep.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/deadbeat/VT-itmo/s5/ОСи/vtsh/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/deep.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/deadbeat/VT-itmo/s5/ОСи/vtsh/build/CMakeFiles 0
+.PHONY : CMakeFiles/deep.dir/rule
+
+# Convenience name for target.
+deep: CMakeFiles/deep.dir/rule
+.PHONY : deep
+
+# codegen rule for target.
+CMakeFiles/deep.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deep.dir/build.make CMakeFiles/deep.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/deadbeat/VT-itmo/s5/ОСи/vtsh/build/CMakeFiles --progress-num=1,2 "Finished codegen for target deep"
+.PHONY : CMakeFiles/deep.dir/codegen
+
+# clean rule for target.
+CMakeFiles/deep.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deep.dir/build.make CMakeFiles/deep.dir/clean
+.PHONY : CMakeFiles/deep.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

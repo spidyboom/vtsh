@@ -1,0 +1,1 @@
+/usr/bin/cc -Wl,--dependency-file=CMakeFiles/deep.dir/link.d CMakeFiles/deep.dir/test/helpers/deep.c.o -o /home/deadbeat/VT-itmo/s5/ОСи/vtsh/test/helpers/deep

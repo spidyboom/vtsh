@@ -17,20 +17,30 @@ typedef struct {
     bool is_bg;    // true если это фоновая команда
 } simple_command_t;
 
+// конвейер: массив команд, соединенных '|'
+typedef struct {
+    simple_command_t *commands;
+    size_t count;
+    bool is_bg;   // true если это фоновый пайплайн
+} pipeline_t;
+
 // узел плана выполнения
 typedef struct {
-    simple_command_t cmd;    // команда
+    pipeline_t pipeline;     // пайплайн
     op_kind_t next_op;       // оператор, который идёт после этой команды (|| или конец)
-} command_node_t;
+} plan_node_t;
 
 // весь план выполнения строки
 typedef struct {
-    command_node_t *nodes;   // массив узлов
+    plan_node_t *nodes;   // массив узлов
     size_t count;            // количество узлов
 } plan_t;
 
 // свобода для динам памяти команды
-void command_free(simple_command_t *cmd);
+void simple_command_free(simple_command_t *cmd);
+
+// чистим пайплайн
+void pipeline_free(pipeline_t *pipe);
 
 // свобода для динам памяти плана команд
 void plan_free(plan_t *p);

@@ -31,3 +31,9 @@ target_include_directories(vtsh PRIVATE include)
 set_target_properties(vtsh PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )
+
+# Вспомогательная программа для тестов лимита стека
+add_executable(deep test/helpers/deep.c)
+set_target_properties(deep PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/test/helpers
+)

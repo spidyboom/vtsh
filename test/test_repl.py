@@ -1,32 +1,31 @@
-import subprocess
 import unittest
-import os
+from helpers import run_vtsh
 
-#запуск втша захват дескрипторов
-VTSH = os.path.join(os.path.dirname(__file__), '..', 'build', 'bin', 'vtsh')
 
 class TestRepl(unittest.TestCase):
+    """Тесты базового цикла REPL"""
+
     def test_eof_exits_cleanly(self):
-        """Проверяем, что vtsh корректно выходит при EOF"""
-        # втша без ввода (EOF)
-        p = subprocess.run([VTSH], input='', capture_output=True, text=True, timeout=5)
+        """При EOF (Ctrl+D) shell выходит с кодом 0"""
+        p = run_vtsh('')
         self.assertEqual(p.returncode, 0)
 
-    def test_echo_line(self):
-        """Проверяем, что vtsh печатает то, что ввели"""
-        p = subprocess.run([VTSH], input='hello\n', capture_output=True, text=True, timeout=5)
-        self.assertIn('hello', p.stdout)
-
     def test_empty_line(self):
-        """Проверяем, что пустая строка не вызывает ошибок"""
-        p = subprocess.run([VTSH], input='\n', capture_output=True, text=True, timeout=5)
+        """Пустая строка не вызывает ошибок"""
+        p = run_vtsh('\n')
+        self.assertEqual(p.returncode, 0)
+
+    def test_multiple_empty_lines(self):
+        """Несколько пустых строк подряд"""
+        p = run_vtsh('\n\n\n')
         self.assertEqual(p.returncode, 0)
 
     def test_multiple_lines(self):
-        """Проверяем, что vtsh обрабатывает несколько строк"""
-        p = subprocess.run([VTSH], input='line1\nline2\n', capture_output=True, text=True, timeout=5)
-        self.assertIn('line1', p.stdout)
-        self.assertIn('line2', p.stdout)
+        """Несколько команд подряд выполняются"""
+        p = run_vtsh('/bin/echo first\n/bin/echo second\n')
+        self.assertIn('first', p.stdout)
+        self.assertIn('second', p.stdout)
+
 
 if __name__ == '__main__':
     unittest.main()

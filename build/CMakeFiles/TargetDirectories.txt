@@ -1,3 +1,4 @@
 /home/deadbeat/VT-itmo/s5/ОСи/vtsh/build/CMakeFiles/vtsh.dir
+/home/deadbeat/VT-itmo/s5/ОСи/vtsh/build/CMakeFiles/deep.dir
 /home/deadbeat/VT-itmo/s5/ОСи/vtsh/build/CMakeFiles/edit_cache.dir
 /home/deadbeat/VT-itmo/s5/ОСи/vtsh/build/CMakeFiles/rebuild_cache.dir

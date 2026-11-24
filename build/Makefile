@@ -129,6 +129,19 @@ vtsh/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/build
 .PHONY : vtsh/fast
 
+#=============================================================================
+# Target rules for targets named deep
+
+# Build rule for target.
+deep: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 deep
+.PHONY : deep
+
+# fast build rule for target.
+deep/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deep.dir/build.make CMakeFiles/deep.dir/build
+.PHONY : deep/fast
+
 src/executor.o: src/executor.c.o
 .PHONY : src/executor.o
 
@@ -249,6 +262,30 @@ src/repl.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/src/repl.c.s
 .PHONY : src/repl.c.s
 
+test/helpers/deep.o: test/helpers/deep.c.o
+.PHONY : test/helpers/deep.o
+
+# target to build an object file
+test/helpers/deep.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deep.dir/build.make CMakeFiles/deep.dir/test/helpers/deep.c.o
+.PHONY : test/helpers/deep.c.o
+
+test/helpers/deep.i: test/helpers/deep.c.i
+.PHONY : test/helpers/deep.i
+
+# target to preprocess a source file
+test/helpers/deep.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deep.dir/build.make CMakeFiles/deep.dir/test/helpers/deep.c.i
+.PHONY : test/helpers/deep.c.i
+
+test/helpers/deep.s: test/helpers/deep.c.s
+.PHONY : test/helpers/deep.s
+
+# target to generate assembly for a file
+test/helpers/deep.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deep.dir/build.make CMakeFiles/deep.dir/test/helpers/deep.c.s
+.PHONY : test/helpers/deep.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -257,6 +294,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... deep"
 	@echo "... vtsh"
 	@echo "... src/executor.o"
 	@echo "... src/executor.i"
@@ -273,6 +311,9 @@ help:
 	@echo "... src/repl.o"
 	@echo "... src/repl.i"
 	@echo "... src/repl.s"
+	@echo "... test/helpers/deep.o"
+	@echo "... test/helpers/deep.i"
+	@echo "... test/helpers/deep.s"
 .PHONY : help
 
 
