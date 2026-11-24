@@ -5,6 +5,7 @@ bin/vtsh: \
   CMakeFiles/vtsh.dir/src/main.c.o \
   CMakeFiles/vtsh.dir/src/repl.c.o \
   CMakeFiles/vtsh.dir/src/parser.c.o \
+  CMakeFiles/vtsh.dir/src/executor.c.o \
   /usr/lib/gcc/x86_64-linux-gnu/15/libgcc.a \
   /usr/lib/gcc/x86_64-linux-gnu/15/libgcc_s.so \
   /usr/lib/gcc/x86_64-linux-gnu/15/libgcc_s.so \
@@ -38,6 +39,8 @@ CMakeFiles/vtsh.dir/src/main.c.o:
 CMakeFiles/vtsh.dir/src/repl.c.o:
 
 CMakeFiles/vtsh.dir/src/parser.c.o:
+
+CMakeFiles/vtsh.dir/src/executor.c.o:
 
 /usr/lib/gcc/x86_64-linux-gnu/15/libgcc.a:
 

@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/vtsh.dir/link.d"
+  "CMakeFiles/vtsh.dir/src/executor.c.o"
+  "CMakeFiles/vtsh.dir/src/executor.c.o.d"
   "CMakeFiles/vtsh.dir/src/main.c.o"
   "CMakeFiles/vtsh.dir/src/main.c.o.d"
   "CMakeFiles/vtsh.dir/src/parser.c.o"

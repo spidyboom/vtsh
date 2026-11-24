@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include "repl.h"
 #include "parser.h"
+#include "executor.h"
 
 void repl_run(void) {
     char *line = NULL;      // указатель на буфер куда будем читать строку с помощью getline
@@ -46,12 +47,10 @@ void repl_run(void) {
 
         // pass
         if (cmd.argc > 0) {
-            // печатаем аргументы
-            printf("[parsed] argc=%zu:", cmd.argc);
-            for (size_t i = 0; i < cmd.argc; ++i) {
-                printf(" [%s]", cmd.argv[i]);
-            }
-            printf("\n");
+            // Вызываем executor для запуска команды
+            int status = execute_simple(&cmd);
+            // Пока не используем status, но позже понадобится для ||
+            (void)status;
         }
         
         // фришим память команды

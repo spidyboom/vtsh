@@ -20,6 +20,7 @@ add_executable(vtsh
     src/main.c
     src/repl.c
     src/parser.c
+    src/executor.c  
 )
 
 # заголовочные файлы в include

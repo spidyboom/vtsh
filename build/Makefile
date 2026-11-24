@@ -129,6 +129,30 @@ vtsh/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/build
 .PHONY : vtsh/fast
 
+src/executor.o: src/executor.c.o
+.PHONY : src/executor.o
+
+# target to build an object file
+src/executor.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/src/executor.c.o
+.PHONY : src/executor.c.o
+
+src/executor.i: src/executor.c.i
+.PHONY : src/executor.i
+
+# target to preprocess a source file
+src/executor.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/src/executor.c.i
+.PHONY : src/executor.c.i
+
+src/executor.s: src/executor.c.s
+.PHONY : src/executor.s
+
+# target to generate assembly for a file
+src/executor.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vtsh.dir/build.make CMakeFiles/vtsh.dir/src/executor.c.s
+.PHONY : src/executor.c.s
+
 src/main.o: src/main.c.o
 .PHONY : src/main.o
 
@@ -210,6 +234,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... vtsh"
+	@echo "... src/executor.o"
+	@echo "... src/executor.i"
+	@echo "... src/executor.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
