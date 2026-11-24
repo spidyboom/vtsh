@@ -38,23 +38,22 @@ void repl_run(void) {
             continue;
         }
         
-        // структура команды + парс строки в неё
-        simple_command_t cmd;
-        if (parse_simple(line, &cmd) != 0) {
+        // парсим строку в план
+        plan_t plan;
+        if (parse_plan(line, &plan) != 0) {
             fprintf(stderr, "vtsh: parse error\n");
             continue;
         }
-
-        // pass
-        if (cmd.argc > 0) {
-            // Вызываем executor для запуска команды
-            int status = execute_simple(&cmd);
-            // Пока не используем status, но позже понадобится для ||
+        
+        if (plan.count > 0) {
+            // выполняем план
+            int status = execute_plan(&plan);
+            // pass
             (void)status;
         }
         
-        // фришим память команды
-        command_free(&cmd);
+        // освобождаем план
+        plan_free(&plan);
 
     }
     

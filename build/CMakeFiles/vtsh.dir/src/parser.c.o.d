@@ -43,5 +43,6 @@ CMakeFiles/vtsh.dir/src/parser.c.o: \
  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h /usr/include/alloca.h \
  /usr/include/x86_64-linux-gnu/bits/types/once_flag.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h /usr/include/string.h \
- /usr/include/strings.h /usr/include/ctype.h \
+ /usr/include/strings.h \
+ /usr/lib/gcc/x86_64-linux-gnu/15/include/stdbool.h /usr/include/ctype.h \
  /home/deadbeat/VT-itmo/s5/ОСи/vtsh/include/parser.h

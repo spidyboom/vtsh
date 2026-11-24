@@ -181,3 +181,30 @@ int execute_simple(const simple_command_t *cmd) {
     // pass
     return 1;
 }
+
+// выполняет план команд
+int execute_plan(const plan_t *plan) {
+    int last_status = 0;
+
+    // проходим по всем узлам плана
+    for (size_t i = 0; i < plan->count; ++i) {
+        const command_node_t *node = &plan->nodes[i];
+        
+        // нужно ли вообще выполнять команду
+        if (i > 0) {
+            op_kind_t prev_op = plan->nodes[i - 1].next_op;
+            
+            // если предыдущий оператор был || и последняя команда успешна (статус 0), то пропускаем команду
+            if (prev_op == OP_OR && last_status == 0) {
+                continue;
+            }
+        }
+
+        // выполняем команду
+        if (node->cmd.argc > 0) {
+            last_status = execute_simple(&node->cmd);
+        }
+    }
+
+    return last_status;
+}

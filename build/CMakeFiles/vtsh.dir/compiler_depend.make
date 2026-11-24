@@ -56,6 +56,7 @@ CMakeFiles/vtsh.dir/src/executor.c.o: /home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/
   /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+  /usr/include/x86_64-linux-gnu/bits/resource.h \
   /usr/include/x86_64-linux-gnu/bits/sched.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
   /usr/include/x86_64-linux-gnu/bits/sigaction.h \
@@ -102,6 +103,7 @@ CMakeFiles/vtsh.dir/src/executor.c.o: /home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/
   /usr/include/x86_64-linux-gnu/bits/types/sigval_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/stack_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_rusage.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
@@ -118,6 +120,7 @@ CMakeFiles/vtsh.dir/src/executor.c.o: /home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
   /usr/include/x86_64-linux-gnu/sys/mman.h \
+  /usr/include/x86_64-linux-gnu/sys/resource.h \
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
   /usr/include/x86_64-linux-gnu/sys/ucontext.h \
@@ -212,6 +215,7 @@ CMakeFiles/vtsh.dir/src/repl.c.o: /home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/repl
   /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+  /usr/include/x86_64-linux-gnu/bits/resource.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
@@ -236,6 +240,7 @@ CMakeFiles/vtsh.dir/src/repl.c.o: /home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/repl
   /usr/include/x86_64-linux-gnu/bits/types/once_flag.h \
   /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_rusage.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
   /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
@@ -249,6 +254,7 @@ CMakeFiles/vtsh.dir/src/repl.c.o: /home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/repl
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/resource.h \
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
   /usr/lib/gcc/x86_64-linux-gnu/15/include/stdarg.h \
@@ -266,12 +272,15 @@ bin/vtsh: /lib64/ld-linux-x86-64.so.2 \
   /usr/lib/gcc/x86_64-linux-gnu/15/libgcc_s.so \
   /usr/lib/x86_64-linux-gnu/libc.so.6 \
   /usr/lib/x86_64-linux-gnu/libc_nonshared.a \
+  CMakeFiles/vtsh.dir/src/executor.c.o \
   CMakeFiles/vtsh.dir/src/main.c.o \
   CMakeFiles/vtsh.dir/src/parser.c.o \
   CMakeFiles/vtsh.dir/src/repl.c.o
 
 
 CMakeFiles/vtsh.dir/src/parser.c.o:
+
+CMakeFiles/vtsh.dir/src/executor.c.o:
 
 /usr/lib/x86_64-linux-gnu/libc.so.6:
 
@@ -286,6 +295,14 @@ CMakeFiles/vtsh.dir/src/parser.c.o:
 /usr/lib/x86_64-linux-gnu/crtn.o:
 
 /usr/lib/x86_64-linux-gnu/crti.o:
+
+CMakeFiles/vtsh.dir/src/main.c.o:
+
+/usr/include/ctype.h:
+
+/home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/parser.c:
+
+/home/deadbeat/VT-itmo/s5/ОСи/vtsh/include/repl.h:
 
 /usr/lib/x86_64-linux-gnu/Scrt1.o:
 
@@ -333,6 +350,8 @@ CMakeFiles/vtsh.dir/src/repl.c.o:
 
 /usr/include/x86_64-linux-gnu/bits/types/once_flag.h:
 
+/usr/include/x86_64-linux-gnu/bits/resource.h:
+
 /usr/include/string.h:
 
 /usr/include/linux/stddef.h:
@@ -340,8 +359,6 @@ CMakeFiles/vtsh.dir/src/repl.c.o:
 /usr/include/x86_64-linux-gnu/bits/endianness.h:
 
 /usr/include/endian.h:
-
-/home/deadbeat/VT-itmo/s5/ОСи/vtsh/include/repl.h:
 
 /usr/include/x86_64-linux-gnu/bits/sched.h:
 
@@ -435,15 +452,15 @@ CMakeFiles/vtsh.dir/src/repl.c.o:
 
 /usr/include/x86_64-linux-gnu/bits/floatn-common.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/signum-generic.h:
-
 /usr/include/x86_64-linux-gnu/bits/mman_ext.h:
 
 /usr/include/x86_64-linux-gnu/sys/select.h:
 
 /usr/include/unistd.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/signum-generic.h:
 
 /usr/include/x86_64-linux-gnu/bits/sigthread.h:
 
@@ -517,6 +534,8 @@ CMakeFiles/vtsh.dir/src/repl.c.o:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/struct_rusage.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
 
 /home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/repl.c:
@@ -533,10 +552,6 @@ CMakeFiles/vtsh.dir/src/repl.c.o:
 
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
-CMakeFiles/vtsh.dir/src/main.c.o:
-
-/usr/include/ctype.h:
-
 /usr/lib/x86_64-linux-gnu/libc_nonshared.a:
 
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
@@ -544,6 +559,8 @@ CMakeFiles/vtsh.dir/src/main.c.o:
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+
+/usr/include/x86_64-linux-gnu/sys/resource.h:
 
 /usr/include/x86_64-linux-gnu/sys/mman.h:
 
@@ -554,5 +571,3 @@ CMakeFiles/vtsh.dir/src/main.c.o:
 /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
 
 /usr/include/x86_64-linux-gnu/sys/wait.h:
-
-/home/deadbeat/VT-itmo/s5/ОСи/vtsh/src/parser.c:
