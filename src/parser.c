@@ -1,20 +1,18 @@
 #define _GNU_SOURCE
-#include <stdlib.h>  
+#include <stdlib.h>
 #include <string.h>
-#include <stdbool.h> 
+#include <stdbool.h>
 #include <ctype.h>
 #include "parser.h"
 
 // освобождает память занятую командой
 void simple_command_free(simple_command_t *cmd) {
-    if (!cmd) return;                 
-    
+    if (!cmd) return;
     // освобождаем каждую строку принадлежащую нашей структуре
     for (size_t i = 0; i < cmd->argc; ++i) {
         free(cmd->argv[i]); 
         cmd->argv[i] = NULL;  
     }
-    
     // освобождаем сам массив, элементы освободили выше
     free(cmd->argv);
     cmd->argv = NULL;
@@ -37,11 +35,9 @@ void pipeline_free(pipeline_t *pipe) {
 // так как структуры похожи то все как и выше
 void plan_free(plan_t *p) {
     if (!p) return;
-
     for (size_t i = 0; i < p->count; ++i) {
         pipeline_free(&p->nodes[i].pipeline);
     }
-
     free(p->nodes);
     p->nodes = NULL;
     p->count = 0;
@@ -53,22 +49,18 @@ static int parse_single_command(const char *start, size_t len, simple_command_t 
     out->argv = NULL;
     out->argc = 0;
     out->is_bg = false;
-
     // копируем ровно len символов так как не имеем желания изменять исходную структуру
     char *copy = strndup(start, len);
     if (!copy) return -1;
-
     // проверяем, не заканчивается ли на '&' (фоновый процесс)
     // ищем последний непробельный символ
     char *p = copy + len - 1;
     while (p >= copy && isspace((unsigned char)*p)) p--;
-    
     if (p >= copy && *p == '&') {
         // вырезаем &
         *p = '\0';
         out->is_bg = true;
     }
-    
     // выбираем начальное капасити в 8 и заполняем нулами все элементы
     size_t cap = 8;
     out->argv = calloc(cap, sizeof(char*));
@@ -76,15 +68,13 @@ static int parse_single_command(const char *start, size_t len, simple_command_t 
         free(copy);
         return -1;
     }
-
     // strtok_r разбивает строку на отдельные слова ограниченные разделителями
     // save вспомогательный указатель этой функции
-     // каждый токен новое слово из строки, последний токен строчки будет нулл, поэтому стопимся когда его встретим
+    // каждый токен новое слово из строки, последний токен строчки будет нулл, поэтому стопимся когда его встретим
     char *save = NULL;
     for (char *tok = strtok_r(copy, " \t", &save);
          tok != NULL;
          tok = strtok_r(NULL, " \t", &save)) {
-        
         // проверка на переполнение, если не хватает увеличиваем в два раза
         if (out->argc + 1 >= cap) { 
             cap *= 2;
@@ -96,7 +86,6 @@ static int parse_single_command(const char *start, size_t len, simple_command_t 
             }
             out->argv = new_argv;
         }
-        
         // заполняем новый аргумент структуры токеном который получили посредством strtok_r
         out->argv[out->argc] = strdup(tok);
         if (!out->argv[out->argc]) {
@@ -106,7 +95,6 @@ static int parse_single_command(const char *start, size_t len, simple_command_t 
         }
         out->argc++;
     }
-    
     // добавляем нулл в конец как сигнал конца 
     out->argv[out->argc] = NULL;
     free(copy);
@@ -115,21 +103,19 @@ static int parse_single_command(const char *start, size_t len, simple_command_t 
 
 // ищет оператор ("||" или "|") в строке
 // возвращает указатель на позицию оператора или NULL
-static const char *find_op(const char *str, const char *op_str, size_t op_len) {
+static const char *find_op(const char *str, const char *end, const char *op_str, size_t op_len) {
     const char *p = str;
-
     // ищем подстроки
-    while ((p = strstr(p, op_str)) != NULL) {
+    while (p + op_len <= end) {
+        const char *found = strstr(p, op_str);
+        if (!found || found + op_len > end) return NULL;
         // слева пробел или начало строки?
-        bool left_ok = (p == str) || isspace((unsigned char)*(p - 1));
+        bool left_ok = (found == str) || isspace((unsigned char)*(found - 1));
         // справа пробел или конец строки?
-        bool right_ok = isspace((unsigned char)*(p + op_len)) || (*(p + op_len) == '\0');
-
-        if (left_ok && right_ok) return p; // найден оператор
-
-        p += op_len; // ищем дальше
+        bool right_ok = (found + op_len == end) || isspace((unsigned char)*(found + op_len));
+        if (left_ok && right_ok) return found; // найден оператор
+        p = found + op_len; // демдальше
     }
-
     return NULL; // оператор не найден
 }
 
@@ -152,11 +138,8 @@ static int parse_pipeline(const char *start, size_t len, pipeline_t *out) {
         while (current < end && isspace((unsigned char)*current)) current++;
         if (current >= end) break;
 
-        const char *pipe_pos = find_op(current, "|", 1);
-        // убедимся, что это не "||"
-        if (pipe_pos && (pipe_pos + 1 < end) && *(pipe_pos + 1) == '|') {
-            pipe_pos = NULL; 
-        }
+        // ищем одинарный |
+        const char *pipe_pos = find_op(current, end, "|", 1);
 
         // определяем конец текущей команды
         const char *cmd_end = pipe_pos ? pipe_pos : end;
@@ -166,29 +149,24 @@ static int parse_pipeline(const char *start, size_t len, pipeline_t *out) {
 
         // убираем пробелы в конце команды
         while (cmd_len > 0 && isspace((unsigned char)current[cmd_len - 1])) cmd_len--;
-
         if (cmd_len == 0) {
             current = pipe_pos ? pipe_pos + 1 : end;
             continue;
         }
-
         if (out->count >= cap) {
             cap *= 2;
             simple_command_t *nv = realloc(out->commands, cap * sizeof(simple_command_t));
             if (!nv) { pipeline_free(out); return -1; }
             out->commands = nv;
         }
-
         if (parse_single_command(current, cmd_len, &out->commands[out->count]) != 0) {
             pipeline_free(out);
             return -1;
         }
-        
         // если последняя команда в конвейере имеет '&', помечаем весь конвейер
         if (out->commands[out->count].is_bg) {
             out->is_bg = true;
         }
-        
         out->count++;
         current = pipe_pos ? pipe_pos + 1 : end;
     }
@@ -209,37 +187,40 @@ int parse_plan(const char *line, plan_t *out) {
     if (!out->nodes) return -1;
 
     const char *current = line;
-    
+    const char *line_end = line + strlen(line);
+
     // пока есть чему работать (что парсить)
     while (*current != '\0') {
         while (isspace((unsigned char)*current)) current++;
         if (*current == '\0') break;
 
-        const char *or_pos = find_op(current, "||", 2);
-        const char *node_end = or_pos ? or_pos : (current + strlen(current));
-        size_t node_len = node_end - current;
-        while (node_len > 0 && isspace((unsigned char)current[node_len - 1])) node_len--;
+        // ищем ||
+        const char *or_pos = find_op(current, line_end, "||", 2);
 
+        // конец узла
+        const char *node_end = or_pos ? or_pos : line_end;
+
+        // длина узла
+        size_t node_len = node_end - current;
+
+        while (node_len > 0 && isspace((unsigned char)current[node_len - 1])) node_len--;
         if (node_len == 0) {
-            current = or_pos ? or_pos + 2 : current + strlen(current);
+            current = or_pos ? or_pos + 2 : line_end;
             continue;
         }
-
         if (out->count >= cap) {
             cap *= 2;
             plan_node_t *nv = realloc(out->nodes, cap * sizeof(plan_node_t));
             if (!nv) { plan_free(out); return -1; }
             out->nodes = nv;
         }
-
         if (parse_pipeline(current, node_len, &out->nodes[out->count].pipeline) != 0) {
             plan_free(out);
             return -1;
         }
-
         out->nodes[out->count].next_op = or_pos ? OP_OR : OP_NONE;
         out->count++;
-        current = or_pos ? or_pos + 2 : current + strlen(current);
+        current = or_pos ? or_pos + 2 : line_end;
     }
     return 0;
 }

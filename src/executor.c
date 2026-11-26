@@ -34,6 +34,7 @@ extern char **environ;
 void executor_set_stack_limit(rlim_t limit);
 static pid_t spawn_command(const simple_command_t *cmd, int stdin_fd, int stdout_fd,
                            int *close_fds, int close_fds_count);
+static int execute_pipeline(const pipeline_t *pl, int *out_status);
 
 // функция, которую передаем дочернему процессу
 static int child_main(void *arg) {
@@ -115,8 +116,7 @@ void executor_set_stack_limit(rlim_t limit) {
 // возвращает PID созданного процесса (или 0 для встроенных команд)
 static pid_t spawn_command(const simple_command_t *cmd, int stdin_fd, int stdout_fd,
                            int *close_fds, int close_fds_count) {
-    if (cmd->argc == 0)
-        return 0;
+    if (cmd->argc == 0) return 0;
 
     // встроенные команды работают только без перенаправлений
     if (stdin_fd == -1 && stdout_fd == -1) {
@@ -187,14 +187,11 @@ static pid_t spawn_command(const simple_command_t *cmd, int stdin_fd, int stdout
 
 // запуск команды (для одиночных команд)
 int execute_simple(const simple_command_t *cmd) {
-    if (cmd->argc == 0)
-        return 0;
+    if (cmd->argc == 0) return 0;
 
     pid_t pid = spawn_command(cmd, -1, -1, NULL, 0);
-    if (pid < 0)
-        return 1;
-    if (pid == 0)
-        return 0; // встроенная команда
+    if (pid < 0) return 1;
+    if (pid == 0) return 0; // встроенная команда
 
     // если процесс фоновый
     if (cmd->is_bg) {
@@ -339,11 +336,9 @@ static int execute_pipeline(const pipeline_t *pl, int *out_status) {
 // выполняет план команд
 int execute_plan(const plan_t *plan) {
     int last_status = 0;
-
     // проходим по всем узлам плана
     for (size_t i = 0; i < plan->count; ++i) {
-        const plan_node_t *node = &plan->nodes[i];
-
+        const plan_node_t *node = &plan->nodes[i];  // ← ПРАВИЛЬНЫЙ ТИП!
         // нужно ли вообще выполнять команду
         if (i > 0) {
             op_kind_t prev_op = plan->nodes[i - 1].next_op;
@@ -352,12 +347,10 @@ int execute_plan(const plan_t *plan) {
                 continue;
             }
         }
-
-        // выполняем конвейер
+        // выполняем конвейер (а не одиночную команду!)
         if (node->pipeline.count > 0) {
-            execute_pipeline(&node->pipeline, &last_status);
+            execute_pipeline(&node->pipeline, &last_status);  // ← ПРАВИЛЬНЫЙ ВЫЗОВ!
         }
     }
-
     return last_status;
 }
