@@ -3,11 +3,10 @@
 static volatile int depth = 0;
 
 __attribute__((noinline)) void recur(void) {
-    char buf[1024];  // 1 КБ на каждый вызов
+    volatile char buf[1024]; 
     buf[0] = (char)(depth++);
-    recur();  // бесконечная рекурсия
+    recur();
 }
-
 int main(void) {
     recur();
     return 0;

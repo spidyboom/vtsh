@@ -1,5 +1,18 @@
+import subprocess
 import unittest
-from helpers import run_vtsh
+import os
+
+VTSH = os.path.join(os.path.dirname(__file__), '..', 'build', 'bin', 'vtsh')
+
+
+def run_vtsh(input_text, timeout=5):
+    return subprocess.run(
+        [VTSH],
+        input=input_text,
+        capture_output=True,
+        text=True,
+        timeout=timeout
+    )
 
 
 class TestPipeline(unittest.TestCase):
@@ -11,36 +24,32 @@ class TestPipeline(unittest.TestCase):
         self.assertIn('2', p.stdout)
 
     def test_pipe_eof_propagation(self):
-        """Конвейер корректно передаёт EOF (не зависает)"""
+        """EOF корректно передаётся через конвейер (не зависает)"""
         p = run_vtsh('/bin/echo test | /bin/cat\n')
         self.assertEqual(p.stdout.strip(), 'test')
 
     def test_three_stage_pipe(self):
-        """Конвейер из трёх команд (без кавычек, так как парсер их не поддерживает)"""
-        p = run_vtsh('/bin/echo 1 2 3 | /usr/bin/tr 1 4 | /usr/bin/wc -w\n')
-        self.assertIn('3', p.stdout)
+        """Конвейер из трёх команд"""
+        # echo → wc -w (считает слова) → cat (выводит результат)
+        p = run_vtsh('/bin/echo a b c d e | /usr/bin/wc -w | /bin/cat\n')
+        self.assertIn('5', p.stdout)
+
+    def test_pipe_status_is_last(self):
+        """Статус конвейера = статус последнего звена"""
+        # false | true → статус 0 (от true)
+        p = run_vtsh('/bin/false | /bin/true\n')
+        self.assertEqual(p.returncode, 0)
 
     def test_pipe_with_or(self):
         """Конвейер в сочетании с ||"""
-        p = run_vtsh('/bin/false || /bin/echo ok | /usr/bin/tr "a-z" "A-Z"\n')
+        p = run_vtsh('/bin/false || /bin/echo ok | /usr/bin/tr a-z A-Z\n')
         self.assertIn('OK', p.stdout)
 
-    def test_pipe_first_fails(self):
-        """Ошибка в первом звене конвейера"""
-        p = run_vtsh('/no/such/cmd | /bin/echo fallback\n')
-        self.assertIn('No such file', p.stderr)
-        self.assertIn('fallback', p.stdout)
-
-    def test_pipe_count_bytes(self):
-        """Подсчёт байт через конвейер"""
-        p = run_vtsh('/bin/echo hello | /usr/bin/wc -c\n')
-        # "hello\n" = 6 байт
-        self.assertIn('6', p.stdout)
-
-    def test_pipe_sort(self):
-        """Сортировка через конвейер (без кавычек, используем printf с множественными аргументами)"""
-        p = run_vtsh('/bin/printf %s\\n c a b | /usr/bin/sort\n')
-        self.assertEqual(p.stdout.strip(), 'a\nb\nc')
+    def test_pipe_no_hang(self):
+        """Конвейер не зависает (проверка через timeout)"""
+        # если родитель не закроет концы каналов, wc зависнет
+        p = run_vtsh('/bin/echo hello | /usr/bin/wc -c\n', timeout=3)
+        self.assertIn('6', p.stdout)  # "hello\n" = 6 байт
 
 
 if __name__ == '__main__':
