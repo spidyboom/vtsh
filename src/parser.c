@@ -208,6 +208,7 @@ int parse_plan(const char *line, plan_t *out) {
             current = or_pos ? or_pos + 2 : line_end;
             continue;
         }
+        
         if (out->count >= cap) {
             cap *= 2;
             plan_node_t *nv = realloc(out->nodes, cap * sizeof(plan_node_t));

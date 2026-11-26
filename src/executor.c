@@ -10,7 +10,7 @@
 #include <errno.h>
 #include "executor.h"
 
-// мегабайт для ребенка
+// мегабайт для ребенка (для каждого дочернего процесса)
 #define CHILD_STACK_SIZE (1024 * 1024)
 
 // лимит стека
@@ -24,7 +24,7 @@ typedef struct {
     char **envp;   // переменные окружения
     int stdin_fd;  // -1 если не нужно перенаправлять
     int stdout_fd; // -1 если не нужно перенаправлять
-    int *close_fds;       // массив файловых дескрипторов для закрытия в ребёнке
+    int *close_fds;       // массив файловых дескрипторов 
     int close_fds_count;  // количество дескрипторов в массиве
 } clone_arg_t;
 
@@ -42,11 +42,10 @@ static int child_main(void *arg) {
     clone_arg_t *a = (clone_arg_t *)arg;
 
     // закрываем все ненужные файловые дескрипторы каналов
-    // это критично для конвейеров: если ребёнок унаследует концы каналов,
-    // которые ему не нужны, то последний читатель не получит EOF и конвейер зависнет
+    // пайплайн работает так, что пока открыты концы на запись/чтение, процесс с другого конца будет ждать этого бесконечно долго
     for (int i = 0; i < a->close_fds_count; i++) {
         int fd = a->close_fds[i];
-        // не закрываем stdin_fd и stdout_fd — они нужны для dup2
+        // не закрываем stdin_fd и stdout_fd - они нужны для dup2
         if (fd != a->stdin_fd && fd != a->stdout_fd) {
             close(fd);
         }
@@ -113,12 +112,12 @@ void executor_set_stack_limit(rlim_t limit) {
 }
 
 // запуск одной команды с возможностью перенаправления stdin/stdout
-// возвращает PID созданного процесса (или 0 для встроенных команд)
+// возвращает PID созданного процесса (0 для встроенных команд)
 static pid_t spawn_command(const simple_command_t *cmd, int stdin_fd, int stdout_fd,
                            int *close_fds, int close_fds_count) {
     if (cmd->argc == 0) return 0;
 
-    // встроенные команды работают только без перенаправлений
+    // встроенные команды 
     if (stdin_fd == -1 && stdout_fd == -1) {
         // АПДЕЙТ ДРУЗЬЯ
         // ВСТРОЕННАЯ КОМАНДА: setstacklimit
@@ -243,15 +242,15 @@ static int execute_pipeline(const pipeline_t *pl, int *out_status) {
         return *out_status;
     }
 
-    // несколько команд — создаём каналы
+    // несколько команд тада создаём каналы
     int num_pipes = (int)pl->count - 1;
     int pipes[num_pipes][2];
 
-    // создаём все каналы заранее
+    // создаём все каналы заранее (канал = два файловых дескриптора)
     for (int i = 0; i < num_pipes; i++) {
         if (pipe(pipes[i]) == -1) {
             perror("pipe");
-            // закрываем уже созданные каналы
+            // закрываем уже созданные каналы если упало с ошибкой
             for (int j = 0; j < i; j++) {
                 close(pipes[j][0]);
                 close(pipes[j][1]);
@@ -262,9 +261,6 @@ static int execute_pipeline(const pipeline_t *pl, int *out_status) {
     }
 
     // массив всех файловых дескрипторов каналов
-    // передаём его в дочерние процессы, чтобы они закрыли все ненужные
-    // это решает проблему зависания конвейера: если ребёнок унаследует
-    // концы каналов, которые ему не нужны, последний читатель не получит EOF
     int all_fds[num_pipes * 2];
     for (int i = 0; i < num_pipes; i++) {
         all_fds[i * 2] = pipes[i][0];
@@ -277,14 +273,14 @@ static int execute_pipeline(const pipeline_t *pl, int *out_status) {
     // создаём процессы для каждого звена
     for (size_t i = 0; i < pl->count; i++) {
         // первая команда: stdin из терминала, stdout в первый канал
-        // промежуточная команда i: stdin из предыдущего канала, stdout в следующий
+        // мидовая команда: stdin из предыдущего канала, stdout в следующий
         // последняя команда: stdin из последнего канала, stdout в терминал
         int in_fd = (i == 0) ? -1 : pipes[i - 1][0];
         int out_fd = (i == pl->count - 1) ? -1 : pipes[i][1];
 
         pid_t pid = spawn_command(&pl->commands[i], in_fd, out_fd, all_fds, all_fds_count);
         if (pid < 0) {
-            // ошибка создания процесса, закрываем все каналы
+            // ошибка создания процесса => закрываем все каналы
             for (int j = 0; j < num_pipes; j++) {
                 close(pipes[j][0]);
                 close(pipes[j][1]);
@@ -296,7 +292,6 @@ static int execute_pipeline(const pipeline_t *pl, int *out_status) {
     }
 
     // родитель закрывает все концы всех каналов
-    // если этого не сделает, последний читатель не получит EOF и конвейер зависнет
     for (int i = 0; i < num_pipes; i++) {
         close(pipes[i][0]);
         close(pipes[i][1]);
@@ -338,7 +333,7 @@ int execute_plan(const plan_t *plan) {
     int last_status = 0;
     // проходим по всем узлам плана
     for (size_t i = 0; i < plan->count; ++i) {
-        const plan_node_t *node = &plan->nodes[i];  // ← ПРАВИЛЬНЫЙ ТИП!
+        const plan_node_t *node = &plan->nodes[i];
         // нужно ли вообще выполнять команду
         if (i > 0) {
             op_kind_t prev_op = plan->nodes[i - 1].next_op;
@@ -347,9 +342,9 @@ int execute_plan(const plan_t *plan) {
                 continue;
             }
         }
-        // выполняем конвейер (а не одиночную команду!)
+        // выполняем конвейер
         if (node->pipeline.count > 0) {
-            execute_pipeline(&node->pipeline, &last_status);  // ← ПРАВИЛЬНЫЙ ВЫЗОВ!
+            execute_pipeline(&node->pipeline, &last_status);
         }
     }
     return last_status;
